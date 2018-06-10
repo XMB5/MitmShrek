@@ -1,6 +1,6 @@
 const network = require('network');
 const {promisify} = require('util');
-
+const fs = require('fs');
 
 //netmask to cidr converter from https://stackoverflow.com/a/42991012
 function countCharOccurences(string, char) {
@@ -30,6 +30,26 @@ async function getNetworkInfo () {
     return networkInfo;
 }
 
+function readFileRes (filename, mimeType, res) {
+    fs.readFile(filename, 'binary', (err, file) => {
+        if (err) {
+            res.writeHead(500, {"Content-Type": "text/plain"});
+            res.write(err + "\n");
+            res.end();
+            console.error('error reading ' + filename, err);
+            return;
+        }
+
+        res.writeHead(200, {
+            'Content-Type': mimeType,
+            'Cache-Control': 'max-age=31556926'
+        });
+        res.write(file, 'binary');
+        res.end();
+    });
+}
+
 module.exports = {
-    getNetworkInfo
+    getNetworkInfo,
+    readFileRes
 };

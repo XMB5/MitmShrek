@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" onmouseenter="play()" onclick="play()" onmousemove="play()">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Shreked</title>
+    <style>
+        body {
+            background: black;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #shrekImg {
+            background: url(shrek.jpg) no-repeat center center fixed;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            transform-origin: center;
+        }
+
+        /* Heart beat animation */
+        @keyframes beat{
+            to { transform: scale(1.4) skew(30deg); }
+        }
+    </style>
+</head>
+<body>
+
+<audio loop id="shrekAudio">
+    <source src="shrek.mp3" type="audio/mp3">
+</audio>
+
+<div id="shrekImg"></div>
+
+<script type="text/javascript">
+    playing = false;
+    play = function() {
+        if (!playing) {
+            playing = true;
+            document.getElementById("shrekImg").style.animation = 'beat 0.16s infinite alternate';
+            document.getElementById('shrekAudio').play();
+        }
+    }
+</script>
+
+</body>
+</html>
