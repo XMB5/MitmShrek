@@ -19,9 +19,10 @@ async function main() {
 
 }
 
+// noinspection JSIgnoredPromiseFromCall
 main();
 
-require('readline').createInterface(process.stdin, process.stdout).on('line', line => {
+require('readline').createInterface(process.stdin, process.stdout).on('line', () => {
     console.log('quitting from read line');
     process.exit(0);
 });
