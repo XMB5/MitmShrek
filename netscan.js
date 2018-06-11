@@ -3,7 +3,7 @@ const xml2js = require('xml2js');
 
 function findHosts(subnet) {
     return new Promise((resolve, reject) => {
-        childProcess.exec(`nmap ${subnet} -sP -oX -`, (err, stdout) => {
+        childProcess.exec(`nmap ${subnet} -PR -sn -n -oX -`, (err, stdout) => {
             if (err) {
                 reject(err);
             } else {
