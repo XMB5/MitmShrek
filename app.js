@@ -139,11 +139,7 @@ process.on('SIGINT', () => {
     cleanup()
 });
 
-readline.createInterface(process.stdin, process.stdout).on('line', line => {
-    if (line === 'SIGINT') {
-        console.log('read line SIGINT, cleaning up');
-        cleanup();
-    } else {
-        console.log('unknown command ' + line);
-    }
+readline.createInterface(process.stdin, process.stdout).on('line', () => {
+    console.log('read line, cleaning up');
+    cleanup();
 });
