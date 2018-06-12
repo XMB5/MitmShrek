@@ -86,13 +86,13 @@ async function main(target) {
         }
     });
 
-    await new Promise((resolve, reject) => {
+    await new Promise(resolve => {
         cleanup = () => {
             if (arpspoofRunning) {
                 shouldEnd = true;
                 arpspoof.kill('SIGINT');
             } else {
-                process.exit(0);
+                resolve();
             }
         };
     });
