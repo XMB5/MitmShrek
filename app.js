@@ -24,6 +24,7 @@ async function main(target) {
     try {
         console.log('checking for iptables rule');
         await utils.simpleExec('iptables', iptablesArgs);
+        console.log('iptables rule already exists');
     } catch (e) {
         if (e.status === 1) {
             //iptables rule does not exist
@@ -50,6 +51,7 @@ async function main(target) {
 
     let shreker = new Shreker();
     shreker.start();
+    console.log('shreker listening');
 
     console.log('getting network info');
     let networkInfo = await utils.getNetworkInfo();
