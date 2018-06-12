@@ -1,6 +1,6 @@
 # MitmShrek
-Attack a network and replace http websites with pusling shrek.
-[Here](https://xmb5.github.io/MitmShrek/site/example.html) is an example (warning - turn down your speakers)
+Attack a network and replace http websites with a pusling shrek.
+[Here](https://xmb5.github.io/MitmShrek/site/example.html) is the shreked page (warning - turn down your speakers)
 
 ## How does it work?
 1. find the network's gateway IP address
