@@ -9,6 +9,8 @@ class Shreker {
                 readFileRes('shrek.jpg', 'image/jpeg', res);
             } else if (req.url === '/shrek.mp3') {
                 readFileRes('shrek.mp3', 'audio/mpeg', res);
+            } else if (req.url === '/favicon.ico') {
+                readFileRes('shrek-favicon.jpg', 'image/jpeg', res);
             } else {
                 readFileRes('shrek.html', 'text/html', res);
             }
