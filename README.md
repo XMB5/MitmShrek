@@ -18,12 +18,15 @@ Attack a network and replace http websites with pusling shrek.
 7. `npm run dlshrek`
 
 ## Execution
-Replace `mitmshrek` with `npm run start`
+- You must `cd` in the `MitmShrek` directory
+- All actions except `info` require superuser (`sudo`)
+- To run the examples, replace `mitmshrek` with `npm run start`
 
+### Examples
 - `mitmshrek all`
   - shreks the entire network
-- `mitmshrek target <ip address>`
-  - shreks a specific ip address
+- `mitmshrek target 10.0.0.9`
+  - shreks the device with ip address 10.0.0.9
 - `mitmshrek list`
   - lists shrekable targets on the network
 - `mitmshrek info`
