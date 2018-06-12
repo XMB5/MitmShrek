@@ -65,7 +65,7 @@ function simpleExec (command, args) {
             if (status === 0) {
                 resolve();
             } else {
-                let err = new Error('process ended with status code ' + status + ' from signal ' + signal);
+                let err = new Error(command + ' ' + args + ' ended with status code ' + status + ' from signal ' + signal);
                 err.status = status;
                 err.signal = signal;
                 reject(err);
