@@ -6,13 +6,13 @@ class Shreker {
     constructor() {
         this.server = http.createServer((req, res) => {
             if (req.url === '/shrek.jpg') {
-                readFileRes('shrek.jpg', 'image/jpeg', res);
+                readFileRes('site/shrek.jpg', 'image/jpeg', res);
             } else if (req.url === '/shrek.mp3') {
-                readFileRes('shrek.mp3', 'audio/mpeg', res);
+                readFileRes('site/shrek.mp3', 'audio/mpeg', res);
             } else if (req.url === '/favicon.ico') {
-                readFileRes('shrek-favicon.jpg', 'image/jpeg', res);
+                readFileRes('site/shrek-favicon.jpg', 'image/jpeg', res);
             } else {
-                readFileRes('shrek.html', 'text/html', res);
+                readFileRes('site/shrek.html', 'text/html', res);
             }
         });
     }
