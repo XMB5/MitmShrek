@@ -1,6 +1,7 @@
 const network = require('network');
 const {promisify} = require('util');
 const fs = require('fs');
+const childProcess = require('child_process');
 
 //netmask to cidr converter from https://stackoverflow.com/a/42991012
 function countCharOccurences(string, char) {
@@ -49,7 +50,32 @@ function readFileRes (filename, mimeType, res) {
     });
 }
 
+function simpleExec (command, args) {
+    let addToTable = childProcess.spawn(command, args);
+
+    addToTable.stdout.pipe(process.stdout);
+    addToTable.stderr.pipe(process.stderr);
+
+    return new Promise((resolve, reject) => {
+        addToTable.on('error', err => {
+            console.error('error running ' + command + ' ' + args, err);
+            process.exit(7);
+        });
+        addToTable.on('exit', (status, signal) => {
+            if (status === 0) {
+                resolve();
+            } else {
+                let err = new Error('process ended with status code ' + status + ' from signal ' + signal);
+                err.status = status;
+                err.signal = signal;
+                reject(err);
+            }
+        })
+    });
+}
+
 module.exports = {
     getNetworkInfo,
-    readFileRes
+    readFileRes,
+    simpleExec
 };
