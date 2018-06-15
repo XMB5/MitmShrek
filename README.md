@@ -10,12 +10,29 @@ Attack a network and replace http websites with a pusling shrek.
 
 ## Installation
 1. Only works on linux currently
-2. Install `nmap` and `arpspoof` and ensure they are on the `PATH`
+2. Install `nmap` and `arpspoof` and ensure they are on the `$PATH`
 3. Make sure you have `node` and `npm` installed (I recommend [nvm](https://github.com/creationix/nvm))
 4. `git clone https://github.com/XMB5/MitmShrek`
 5. `cd MitmShrek`
 6. `npm install`
 7. `npm run dlshrek`
+
+## arpspoof bug
+Some versions of dsniff are floating around with partially broken arpspoofs.
+These versions of arpspoof will successfully shrek one target, but fail to shrek the entire network.
+To check if you have a broken version of arpspoof, run
+```
+GATEWAY_IP=$(/sbin/ip route | awk '/default/ { print $3 }')
+sudo arpspoof -i wlp3s0 $GATEWAY_IP
+```
+You should see an output similar to
+```
+8c:c4:b1:a1:b9:1b ff:ff:ff:ff:ff:ff 0806 42: arp reply 10.0.0.1 is-at 8c:c4:b1:a1:b9:1b
+8c:c4:b1:a1:b9:1b ff:ff:ff:ff:ff:ff 0806 42: arp reply 10.0.0.1 is-at 8c:c4:b1:a1:b9:1b
+```
+If there is no output or only `Cleaning up and re-arping targets...`, you have a broken version of arpspoof.
+You can download an [almost working version](https://packages.ubuntu.com/bionic/dsniff) of arpspoof from ubuntu packages.
+The ubuntu package does not re-ARP if attacking the LAN, but this is a minor problem apparent only after shreking.
 
 ## Execution
 - You must `cd` in the `MitmShrek` directory
