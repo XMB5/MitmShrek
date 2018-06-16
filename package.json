@@ -5,7 +5,8 @@
   "scripts": {
     "dlshrek": "wget https://web.archive.org/web/20180610161414if_/http://i0.kym-cdn.com/entries/icons/original/000/023/337/random_shrek_by_rainbowdashscout900-d6eyce0.jpg -O site/shrek.jpg && wget https://web.archive.org/web/20180610164508if_/https://dl.dropboxusercontent.com/s/kklgxhwiu9tasb7/shrek.mp3 -O site/shrek.mp3 && wget https://web.archive.org/web/20180612002431if_/https://78.media.tumblr.com/avatar_2088ffa21701_16.pnj -O site/shrek-favicon.jpg",
     "start": "$NODE $NODE_DEBUG_OPTION app.js",
-    "start-sudo": "sudo -p 'Password: ' -S -- $NODE $NODE_DEBUG_OPTION app.js"
+    "start-sudo": "sudo -p 'Password: ' -S -- $NODE $NODE_DEBUG_OPTION app.js",
+    "buildexample": "$NODE $NODE_DEBUG_OPTION buildexample.js"
   },
   "dependencies": {
     "xml2js": "0.4.19",
