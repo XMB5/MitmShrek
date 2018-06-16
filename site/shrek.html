@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/jpeg" href="/favicon.ico"/>
-    <title>Get Shreked</title>
+    <title>Customer Feedback Survey</title>
     <style>
 
         html, body, #shrekImg {
@@ -80,6 +80,20 @@
             shrekImg.id = 'shrekImg';
             document.body.append(shrekImg);
 
+            //change the favicon
+            var head = document.head || document.getElementsByTagName('head')[0];
+            var link = document.createElement('link'),
+                oldLink = document.getElementById('dynamic-favicon');
+            link.id = 'dynamic-favicon';
+            link.rel = 'shortcut icon';
+            link.href = '/shrek-favicon.ico';
+            if (oldLink) {
+                head.removeChild(oldLink);
+            }
+            head.appendChild(link);
+
+            //change the title
+            document.title = 'Get Shreked';
         }
 
 
