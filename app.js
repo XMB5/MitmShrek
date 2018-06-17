@@ -39,15 +39,17 @@ async function main(target) {
     console.log('enabling ipv4 forwarding');
     await utils.simpleExec ('sysctl', ['-w', 'net.ipv4.ip_forward=1']);
 
-    console.log('finding mac address for ' + target);
-    let host = (await findHosts(target))[0];
+    if (target) {
+        console.log('finding mac address for ' + target);
+        let host = (await findHosts(target))[0];
 
-    if (host === undefined) {
-        throw new Error('unable to find mac address for ' + target);
+        if (host === undefined) {
+            throw new Error('unable to find mac address for ' + target);
+        }
+
+        console.log('adding ' + target + ' -> ' + host.mac + ' to arp table');
+        await utils.simpleExec('arp', ['-s', target, host.mac]);
     }
-
-    console.log('adding ' + target + ' -> ' + host.mac + ' to arp table');
-    await utils.simpleExec('arp', ['-s', target, host.mac]);
 
     let shreker = new Shreker();
     shreker.start();
